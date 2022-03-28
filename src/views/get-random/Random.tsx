@@ -3,28 +3,28 @@ import { selector, useRecoilCallback, useRecoilValue } from 'recoil'
 import { _allOptions, _people, _person, _selectedOption } from '../../state';
 
 function shuffle<T>(array: T[]): T[] {
-    let currentIndex = array.length,  randomIndex;
-  
+    let currentIndex = array.length, randomIndex;
+
     // While there remain elements to shuffle...
     while (currentIndex != 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
     }
-  
+
     return array;
-  }
+}
 
 export default function Random() {
     const [blocks, setBlocks] = useState(null as string[] | null);
     const allOptions = useRecoilValue(_allOptions);
     const selectedOption = useRecoilValue(_selectedOption);
-
+    const [finished, setFinished] = useState(false);
 
     useEffect(() => {
 
@@ -40,6 +40,12 @@ export default function Random() {
         setBlocks(newBlocks);
 
     }, [allOptions, selectedOption]);
+
+    useEffect(() => {
+
+        const id = setTimeout(() => setFinished(true), 3000)
+
+    }, []);
 
 
     const colors = useState(shuffle([
@@ -67,10 +73,10 @@ export default function Random() {
 
                 {blocks.map((v, i) => {
 
-                    return <div key={i} className="random-block" style={{
+                    return <div key={i} className={"random-block" + (finished && i === 2 ? " blink" : "")} style={{
                         backgroundColor: colors[(offset + i) % colors.length]
                     }}>
-                        {v}
+                        <p>{v}</p>
                     </div>
 
                 })}

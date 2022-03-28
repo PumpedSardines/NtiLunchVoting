@@ -147,3 +147,21 @@ html,
   font-size: 32px;
   padding: 50px
 }
+
+@keyframes blink {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.random-block.blink p {
+  animation: blink 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
