@@ -1,12 +1,11 @@
 import { useRecoilCallback, useRecoilState, useSetRecoilState } from 'recoil'
 import Person from './Person'
-import { _people, _person, _selectedOption, _view } from '../../state'
+import { _allOptions, _people, _person, _selectedOption, _view } from '../../state'
 import { v4 as uuid } from 'uuid';
 import { useEffect } from 'react';
 
 function People() {
     const [people, setPeople] = useRecoilState(_people);
-    const setView = useSetRecoilState(_view);
 
     // Load on first
     useEffect(() => {
@@ -27,6 +26,12 @@ function People() {
     }, [people]);
 
     const setRandomRestaurant = useRecoilCallback(({ snapshot, set }) => async () => {
+        const allOptions = await snapshot.getPromise(_allOptions);
+
+        if(allOptions.length === 0) {
+            return alert("Du måste välja några resturanger");
+        }
+
         const people = await snapshot.getPromise(_people);
 
         const personId = people[~~(Math.random() * people.length)];
@@ -36,6 +41,7 @@ function People() {
         const option = person.options[~~(Math.random() * person.options.length)];
 
         set(_selectedOption, option);
+        set(_view, "random");
     });
 
     return (<>
@@ -43,10 +49,8 @@ function People() {
             <button onClick={() => {
                 setPeople([...people, uuid()]);
             }}>Lägg till person</button>
-            
-            <button onClick={() =>
-                setRandomRestaurant().then(() => setView("random"))
-            }>Slumpa</button>
+
+            <button onClick={setRandomRestaurant}>Slumpa</button>
         </div>
         {
             people.map(v => {

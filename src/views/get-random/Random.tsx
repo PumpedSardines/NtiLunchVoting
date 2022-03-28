@@ -1,22 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { selector, useRecoilCallback, useRecoilValue } from 'recoil'
-import { _people, _person, _selectedOption } from '../../state';
-
-const _allOptions = selector({
-    key: "_allOptions",
-    get: ({ get }) => {
-        const people = get(_people);
-        const options: string[] = [];
-
-        people.forEach(personId => {
-
-            options.push(...get(_person(personId)).options);
-
-        });
-
-        return options;
-    }
-});
+import { _allOptions, _people, _person, _selectedOption } from '../../state';
 
 function shuffle<T>(array: T[]): T[] {
     let currentIndex = array.length,  randomIndex;
