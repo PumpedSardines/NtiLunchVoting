@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { selector, useRecoilCallback, useRecoilValue } from 'recoil'
-import { _allOptions, _people, _person, _selectedOption } from '../../state';
+import { _allOptions, _people, _person, _selectedOption, _selectedPerson } from '../../state';
 
 function shuffle<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
@@ -40,6 +40,7 @@ export default function Random() {
     const allOptions = useRecoilValue(_allOptions);
     const selectedOption = useRecoilValue(_selectedOption);
     const [finished, setFinished] = useState(false);
+    const selectedPerson = useRecoilValue(_selectedPerson);
 
     const [width, height] = useResize();
 
@@ -61,7 +62,9 @@ export default function Random() {
     useEffect(() => {
 
         document.body.style.overflowY = "hidden";
-        const id = setTimeout(() => setFinished(true), 5000)
+        const id = setTimeout(() => {
+            setFinished(true)
+        }, 5000)
 
     }, []);
 
@@ -100,6 +103,10 @@ export default function Random() {
 
                 })}
 
+            </div>
+
+            <div className={"selected-person" + (finished ? " done" : "") }>
+                {selectedPerson}
             </div>
         </>
 

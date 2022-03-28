@@ -16,6 +16,11 @@ export const _selectedOption = atom({
     default: null as string | null
 });
 
+export const _selectedPerson = atom({
+  key: "_selectedPerson",
+  default: null as string | null
+});
+
 export const _view = atom({
     key: "_view",
     default: "people" as "people" | "random"

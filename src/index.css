@@ -164,3 +164,23 @@ html,
 .random-block.blink p {
   animation: blink 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
+
+.selected-person {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100px;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  border-radius: 24px 24px 0px 0px;
+  transition: transform .2s;
+  transform: translateY(100%);
+}
+
+.selected-person.done {
+  transform: translateY(0%);
+}

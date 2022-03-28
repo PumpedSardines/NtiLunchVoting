@@ -1,6 +1,6 @@
 import { useRecoilCallback, useRecoilState, useSetRecoilState } from 'recoil'
 import Person from './Person'
-import { _allOptions, _people, _person, _selectedOption, _view } from '../../state'
+import { _allOptions, _people, _person, _selectedOption, _selectedPerson, _view } from '../../state'
 import { v4 as uuid } from 'uuid';
 import { useEffect } from 'react';
 
@@ -40,6 +40,7 @@ function People() {
 
         const option = person.options[~~(Math.random() * person.options.length)];
 
+        set(_selectedPerson, person.name)
         set(_selectedOption, option);
         set(_view, "random");
     });
