@@ -61,7 +61,7 @@ export default function Random() {
     useEffect(() => {
 
         document.body.style.overflowY = "hidden";
-        const id = setTimeout(() => setFinished(true), 3000)
+        const id = setTimeout(() => setFinished(true), 5000)
 
     }, []);
 
