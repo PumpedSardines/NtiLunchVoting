@@ -1,18 +1,22 @@
-import { useState } from 'react'
-import Person from './Person'
-function App() {
+import { useRecoilValue } from 'recoil';
+import { _view } from './state';
+import Random from './views/get-random/Random';
+import People from './views/people/People';
 
-  return (
-    <div className="app">
-      <div className="wrapper">
-        <div className='buttons top'>
-          <button>Lägg till person</button>
-          <button>Slumpa</button>
+function App() {
+  const view = useRecoilValue(_view);
+
+  if (view === "people") {
+    return (
+      <div className="app">
+        <div className="wrapper">
+          <People />
         </div>
-        <Person />
       </div>
-    </div>
-  )
+    )
+  } else {
+    return <Random />
+  }
 }
 
 export default App
