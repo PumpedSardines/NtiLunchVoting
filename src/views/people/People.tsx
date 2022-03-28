@@ -47,7 +47,7 @@ function People() {
     return (<>
         <div className='buttons top'>
             <button onClick={() => {
-                setPeople([...people, uuid()]);
+                setPeople([uuid(), ...people]);
             }}>Lägg till person</button>
 
             <button onClick={setRandomRestaurant}>Slumpa</button>
