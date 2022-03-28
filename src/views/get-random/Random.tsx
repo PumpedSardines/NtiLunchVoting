@@ -20,11 +20,28 @@ function shuffle<T>(array: T[]): T[] {
     return array;
 }
 
+function useResize() {
+    const [aspect, setAspect] = useState([window.innerWidth, window.innerHeight]);
+
+    useEffect(() => {
+        const event = () => {
+            setAspect([window.innerWidth, window.innerHeight]);
+        }
+
+        window.addEventListener("resize", event);
+        return () => window.removeEventListener("resize", event);
+    }, []);
+
+    return aspect;
+}
+
 export default function Random() {
     const [blocks, setBlocks] = useState(null as string[] | null);
     const allOptions = useRecoilValue(_allOptions);
     const selectedOption = useRecoilValue(_selectedOption);
     const [finished, setFinished] = useState(false);
+
+    const [width, height] = useResize();
 
     useEffect(() => {
 
@@ -43,6 +60,7 @@ export default function Random() {
 
     useEffect(() => {
 
+        document.body.style.overflowY = "hidden";
         const id = setTimeout(() => setFinished(true), 3000)
 
     }, []);
@@ -69,12 +87,13 @@ export default function Random() {
             <div className='arrow'>
 
             </div>
-            <div id="random">
+            <div id="random" style={{height: `${height}px`}}>
 
                 {blocks.map((v, i) => {
 
                     return <div key={i} className={"random-block" + (finished && i === 2 ? " blink" : "")} style={{
-                        backgroundColor: colors[(offset + i) % colors.length]
+                        backgroundColor: colors[(offset + i) % colors.length],
+                        height: `${height / 5}px`
                     }}>
                         <p>{v}</p>
                     </div>
